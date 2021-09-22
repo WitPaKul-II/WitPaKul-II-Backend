@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { UserEntity } from './users.entity';
+import { Users } from '../entities/users.entity';
 import { UserService } from './users.service';
 
 @Controller('users')
@@ -21,13 +21,13 @@ export class UsersController {
     }
 
     @Post()
-    async create(@Body() createUserDto: UserEntity, @Res() res: Response) {
+    async create(@Body() createUserDto: Users, @Res() res: Response) {
         const response = await this.usersService.create(createUserDto)
         res.status(HttpStatus.OK).json({ payload: response })
     }
 
     @Put(":id")
-    async update(@Param() id: number, @Body() createUserDto: UserEntity, @Res() res: Response) {
+    async update(@Param() id: number, @Body() createUserDto: Users, @Res() res: Response) {
         this.usersService.update(id, createUserDto)
         res.status(HttpStatus.OK).json({ message: "success" })
     }

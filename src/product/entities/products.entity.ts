@@ -9,10 +9,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Brands } from './brands.entity';
-import { Colors } from './colors.entity';
+import { Brands } from '../../ฺbrands/entities/brands.entity';
+import { Colors } from '../../colors/entities/colors.entity';
 import { ProductActivitys } from './productActivitys.entity';
-import { ProductImages } from './productImages.entity';
+import { ProductImages } from '../../images/entities/productImages.entity';
 
 @Entity({ name: 'Products'})
 export class Products {

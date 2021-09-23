@@ -5,8 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Products } from './products.entity';
-@Entity({ name: 'Colors'})
+@Entity({ name: 'Colors'}) 
 export class Colors {
   @PrimaryGeneratedColumn()
   // @Field(() => Int)

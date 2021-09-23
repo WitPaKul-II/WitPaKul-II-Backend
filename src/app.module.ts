@@ -25,7 +25,7 @@ import { ProductActivitysModule } from './product/product_activitys_module/produ
     password: 'mysql',
     database: 'witpakul_db',
     entities: [
-      'dist/**/*.entity{.ts,.js}',
+      'dist/**/entities/*{.ts,.js}',
     ],
     synchronize: false,
     

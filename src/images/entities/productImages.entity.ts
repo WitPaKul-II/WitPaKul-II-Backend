@@ -9,7 +9,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import {Products} from './products.entity'
+import {Products} from '../../product/entities/products.entity'
 @Entity({ name: 'Product_Images'})
 export class ProductImages {
   @PrimaryGeneratedColumn()

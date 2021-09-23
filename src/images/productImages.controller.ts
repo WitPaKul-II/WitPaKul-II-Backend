@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { ProductImages } from '../entities/productImages.entity';
-import {Products} from '../entities/products.entity'
+import { ProductImages } from './entities/productImages.entity';
 import { ProductImagesService } from './productImages.service';
 
 @Controller('productImages')

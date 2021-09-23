@@ -1,39 +1,40 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { Response } from 'express';
-import {Products} from '../entities/products.entity'
-import { ProductService } from './product.service';
+import { Users } from './entities/users.entity';
+import { UserService } from './users.service';
 
-@Controller('products')
-export class ProductController {
-    constructor(private productService : ProductService ) { }
+@Controller('users')
+export class UsersController {
+
+    constructor(private usersService: UserService) { }
 
     @Get()
     async findAll(@Res() res: Response) {
-        const response = await this.productService.findAll()
+        const response = await this.usersService.findAll()
         res.status(HttpStatus.OK).json({ payload: response })
     }
 
     @Get(":id")
     async findOne(@Param() id: number, @Res() res: Response) {
-        const response = await this.productService.findOne(id)
+        const response = await this.usersService.findOne(id)
         res.status(HttpStatus.OK).json({ payload: response })
     }
 
     @Post()
-    async create(@Body() createUserDto: Products, @Res() res: Response) {
-        const response = await this.productService.create(createUserDto)
+    async create(@Body() createUserDto: Users, @Res() res: Response) {
+        const response = await this.usersService.create(createUserDto)
         res.status(HttpStatus.OK).json({ payload: response })
     }
 
     @Put(":id")
-    async update(@Param() id: number, @Body() createUserDto: Products, @Res() res: Response) {
-        this.productService.update(id, createUserDto)
+    async update(@Param() id: number, @Body() createUserDto: Users, @Res() res: Response) {
+        this.usersService.update(id, createUserDto)
         res.status(HttpStatus.OK).json({ message: "success" })
     }
 
     @Delete(":id")
     async delete(@Param() id: number, @Res() res: Response) {
-        this.productService.remove(id)
+        this.usersService.remove(id)
         res.status(HttpStatus.OK).json({ message: "success" })
     }
 }

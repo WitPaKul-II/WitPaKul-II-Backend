@@ -14,8 +14,8 @@ import { BrandsModule } from './ฺbrands/brands.module';
     type: 'mysql',
     host: 'WitPaKul_DB',
     port: 3306,
-    username: 'root',
-    password: 'mysql',
+    username: 'backend',
+    password: 'witpakulbackend',
     database: 'WitPaKul_DB',
     entities: [
       'dist/**/entities/*{.ts,.js}',

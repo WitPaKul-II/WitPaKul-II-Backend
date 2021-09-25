@@ -2,9 +2,11 @@ version: "3.3"
 services:
     backend:
         build: .
-        image: backend:dev
+        image: backend
         volumes:
            - ./pictures:/pictures
+        ports:
+           - "4000:4000"
 networks:
     default:
         external:

@@ -3,11 +3,13 @@ import { Response } from 'express';
 import { Users } from './entities/users.entity';
 import { UserService } from './users.service';
 
+
 @Controller('users')
 export class UsersController {
 
     constructor(private usersService: UserService) { }
 
+    //  after midterm crud
     @Get()
     async findAll(@Res() res: Response) {
         const response = await this.usersService.findAll()

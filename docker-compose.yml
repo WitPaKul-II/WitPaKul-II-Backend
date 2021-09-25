@@ -7,7 +7,7 @@ services:
            - ./pictures:/pictures
         ports:
            - "4000:4000"
- networks:
+networks:
     default:
         external:
             name: witpakul_network 

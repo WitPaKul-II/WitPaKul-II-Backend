@@ -47,7 +47,7 @@ export class Products {
 
   @ManyToMany((type) => Colors,{eager:true})
     @JoinTable({
-        name: 'product_colors',
+        name: 'Product_Colors',
         joinColumn: {
             name: 'product_code',
             referencedColumnName: 'product_code'

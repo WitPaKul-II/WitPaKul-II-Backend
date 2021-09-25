@@ -12,11 +12,11 @@ import { BrandsModule } from './ฺbrands/brands.module';
   imports: [
     TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'process.env.DB_URL',
+    host: 'WitPaKul_DB',
     port: 3306,
-    username: 'process.env.DB_USERNAME',
-    password: 'process.env.DB_PASSWORD',
-    database: 'witpakul_db',
+    username: 'root',
+    password: 'mysql',
+    database: 'WitPaKul_DB',
     entities: [
       'dist/**/entities/*{.ts,.js}',
     ],

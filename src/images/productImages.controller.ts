@@ -9,7 +9,7 @@ export class ProductImagesController {
 
  
 
-    @Get("findAll/productImages")
+    @Get("findAll")
     async findAll(): Promise<ProductImages[]> {
         return await this.productImagesService.findAll();
     }

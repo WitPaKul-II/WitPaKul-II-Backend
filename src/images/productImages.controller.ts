@@ -7,10 +7,11 @@ import { ProductImagesService } from './productImages.service';
 export class ProductImagesController {
     constructor(private productImagesService : ProductImagesService ) { }
 
-    @Get()
-    async findAll(@Res() res: Response) {
-        const response = await this.productImagesService.findAll()
-        res.status(HttpStatus.OK).json({ payload: response })
+ 
+
+    @Get("findAll/productImages")
+    async findAll(): Promise<ProductImages[]> {
+        return await this.productImagesService.findAll();
     }
 
     @Get(":id")

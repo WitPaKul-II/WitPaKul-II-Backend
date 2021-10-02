@@ -25,21 +25,21 @@ export class ProductController {
     }
     //images 
     // http://localhost:3000/images/
-     @Post("images")
-     @UseInterceptors(FileInterceptor('image',{
-         storage: diskStorage({
-             destination: uploadservice.destinationPath,
-             filename: uploadservice.customFileName
-         })
-     }))
-     uploadfile(@UploadedFiles() image ): string {
-       return 'success OK ';
-     }
-     //  http://localhost:3000/images/....path
-     @Get("images/:imagePath")
-     async seeUploadFile(@Param('imagePath') image, @Res() res) {
-         return res.sendFile(image, { root: './data/images/item'});
-     }
+    @Post("images")
+    @UseInterceptors(FileInterceptor('image',{
+        storage: diskStorage({
+            destination: uploadservice.destinationPath,
+            filename: uploadservice.customFileName
+        })
+    }))
+    uploadfile(@UploadedFiles() image ): string {
+    return 'success OK ';
+    }
+    // http://localhost:3000/images/....path
+    @Get("images/:imagePath")
+    async seeUploadFile(@Param('imagePath') image, @Res() res) {
+        return res.sendFile(image, { root: './data/images/item'});
+    }
     
 
 

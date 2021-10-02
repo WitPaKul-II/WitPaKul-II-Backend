@@ -13,7 +13,7 @@ import {Products} from '../../product/entities/products.entity'
 @Entity({ name: 'Product_Images'})
 export class ProductImages {
   @PrimaryGeneratedColumn()
-  // @Field(() => Int)
+  // @Field(() => Int)    
   product_images_id: number;
 
   @Column()

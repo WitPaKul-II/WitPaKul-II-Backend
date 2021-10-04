@@ -19,7 +19,7 @@ export class ProductController {
         return await this.productService.findAll();
     }
     // productcode
-    @Get("/productcode/:productcode")
+    @Get("productcode/:productcode")
     async findOne(@Param("productcode") productcode: number): Promise<Products> {
         return await this.productService.findOne(productcode);
     }

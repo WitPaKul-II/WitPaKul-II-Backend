@@ -10,10 +10,9 @@ export class UsersController {
     constructor(private usersService: UserService) { }
 
     //  after midterm crud
-    @Get()
-    async findAll(@Res() res: Response) {
-        const response = await this.usersService.findAll()
-        res.status(HttpStatus.OK).json({ payload: response })
+    @Get("findAll")
+    async findAll(): Promise<Users[]> {
+        return await this.usersService.findAll();
     }
 
     @Get(":id")

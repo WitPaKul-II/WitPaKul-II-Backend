@@ -14,18 +14,18 @@ export class ProductController {
 
 
     // http://localhost:3000/findAll/product
-    @Get("/findAll/product")
+    @Get("findAll/product")
     async findAll(): Promise<Products[]> {
         return await this.productService.findAll();
     }
     // productcode
-    @Get("/productcode/:productcode")
+    @Get("productcode/:productcode")
     async findOne(@Param("productcode") productcode: number): Promise<Products> {
         return await this.productService.findOne(productcode);
     }
     //images 
     // http://localhost:3000/images/
-    @Post("/images")
+    @Post("images")
     @UseInterceptors(FileInterceptor('image',{
         storage: diskStorage({
             destination: uploadservice.destinationPath,
@@ -36,7 +36,7 @@ export class ProductController {
     return 'success OK ';
     }
     // http://localhost:3000/images/....path
-    @Get("/images/:imagePath")
+    @Get("images/:imagePath")
     async seeUploadFile(@Param('imagePath') image, @Res() res) {
         return res.sendFile(image, { root: './data/images/item'});
     }

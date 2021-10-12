@@ -78,7 +78,7 @@ export class ProductController {
             console.log(UpdateproductDto)
             return await this.productService.update(productcode, updateproductDto);
     }
-    @Delete("delet/:deleteproductId")
+    @Delete("delete/:deleteproductId")
     async deleteproduct(@Param('deleteproductId') productcode: string  ) {
         return await this.productService.remove(productcode);
     }

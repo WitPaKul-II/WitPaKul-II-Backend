@@ -40,12 +40,12 @@ export class Products {
   // @Field()
   amount: string;
   
-  @ManyToOne((type) => Brands , { eager: true, onUpdate: 'CASCADE', onDelete: 'CASCADE'})
+  @ManyToOne((type) => Brands , { eager: true})
   @JoinColumn({name : 'brand' })
   // @Field((type) => Users_Category )
   brand: Brands;
 
-  @ManyToMany((type) => Colors,{eager:true})
+  @ManyToMany((type) => Colors,{eager:true ,onUpdate: 'CASCADE', onDelete: 'CASCADE'})
     @JoinTable({
         name: 'Product_Colors',
         joinColumn: {
@@ -59,10 +59,10 @@ export class Products {
     })
     colors: Colors[];
 
-  @OneToMany((type) => ProductImages, product_images => product_images.product_code)
+  @OneToMany((type) => ProductImages, product_images => product_images.product_code, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   product_images: ProductImages[];
 
-  @OneToMany((type) => ProductActivitys, product_activitys => product_activitys.product_code)
+  @OneToMany((type) => ProductActivitys, product_activitys => product_activitys.product_code, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   product_activitys: ProductActivitys[];
 
 }

@@ -19,8 +19,8 @@ export class Colors {
   // @Field()
   color_name: string;
 
-  @ManyToMany(type => Products, products => products.colors)
-  products: Products[]
+  // @ManyToMany(type => Products, products => products.colors)
+  // products: Products[]
   
 
 }

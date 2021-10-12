@@ -7,33 +7,14 @@ import { ColorsService } from './colors.service';
 export class ColorsController { 
     constructor(private colorsService : ColorsService ) { }
 
-    @Get()
-    async findAll(@Res() res: Response) {
-        const response = await this.colorsService.findAll()
-        res.status(HttpStatus.OK).json({ payload: response })
+    @Get("findAll")
+    async findAll(): Promise<Colors[]> {
+        return await this.colorsService.findAll();
+    }
+    @Get("/:colors")
+    async findOne(@Param("colors") colors: number): Promise<Colors> {
+        return await this.colorsService.findOne(colors);
     }
 
-    @Get(":id")
-    async findOne(@Param() id: number, @Res() res: Response) {
-        const response = await this.colorsService.findOne(id)
-        res.status(HttpStatus.OK).json({ payload: response })
-    }
-
-    @Post()
-    async create(@Body() createUserDto: Colors, @Res() res: Response) {
-        const response = await this.colorsService.create(createUserDto)
-        res.status(HttpStatus.OK).json({ payload: response })
-    }
-
-    @Put(":id")
-    async update(@Param() id: number, @Body() createUserDto: Colors, @Res() res: Response) {
-        this.colorsService.update(id, createUserDto)
-        res.status(HttpStatus.OK).json({ message: "success" })
-    }
-
-    @Delete(":id")
-    async delete(@Param() id: number, @Res() res: Response) {
-        this.colorsService.remove(id)
-        res.status(HttpStatus.OK).json({ message: "success" })
-    }
+  
 }

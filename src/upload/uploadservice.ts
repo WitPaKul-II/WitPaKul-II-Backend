@@ -8,13 +8,16 @@ export class uploadservice {
       }else if(file.mimetype.indexOf("png") > -1){
           fileExtension = "png";
       }
-      const originalName = file.originalname.split(".")[0];
+      const originalName = file.originalname.split(".")[0];      
       cb(null, originalName + '-' + uniqueSuffix+"."+fileExtension);
+      console.log(originalName);
+      
     }
    
     static destinationPath(req, file, cb) {
       cb(null, './data/images/item')
     }
+
   }
 
 //   import { extname } from 'path';

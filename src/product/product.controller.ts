@@ -37,7 +37,6 @@ export class ProductController {
     
     @Post("images")
     @UseInterceptors(FileInterceptor('image', {
-        
         storage: diskStorage({
             destination: uploadservice.destinationPath,
             filename: uploadservice.customFileName,   
@@ -45,26 +44,8 @@ export class ProductController {
     }))
     
     uploadfile(@UploadedFiles() image): string {
-        return "Seccess";
+        return "Success";
     }
-
-        //ลองเอารูปกับproductรวมกัน แตก!!
-    // @Post("images")
-    // @UseInterceptors(FileInterceptor('image', {
-    //     storage: diskStorage({
-    //         destination: uploadservice.destinationPath,
-    //         filename: uploadservice.customFileName
-    //     })
-    // }))
-    // async addfile(@UploadedFiles() image , @Body() createimageDto: CreateimageDto){
-    //   createimageDto.image_url = image.filename;
-
-    //     // const data = this.productService.create(createproductDto);
-    //     // return await this.productService.create(data, createproductDto.image_url);
-    //     // return await this.productService.create(createimageDto);
-    //     return 'success OK ';
-    // }
-
     //  do it in midterm 
                                    
     @Post("addproductId")
@@ -72,9 +53,9 @@ export class ProductController {
         return await this.productService.create(createproductDto);
     }
 
-    @Put("edit/:editproductId")
+    @Put("edit")
     async updateproduct(
-        @Param('editproductId') productcode: string, @Body() updateproductDto: UpdateproductDto){
+        productcode: string, @Body() updateproductDto: UpdateproductDto){
             console.log(UpdateproductDto)
             return await this.productService.update(productcode, updateproductDto);
     }
@@ -82,12 +63,5 @@ export class ProductController {
     async deleteproduct(@Param('deleteproductId') productcode: string  ) {
         return await this.productService.remove(productcode);
     }
-
-    // @Delete(":id")
-    // async delete(@Param() id: number, @Res() res: Response) {
-    //     this.productService.remove(id)
-    //     res.status(HttpStatus.OK).json({ message: "success" })
-    // }
-
 
 }

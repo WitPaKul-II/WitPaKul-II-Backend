@@ -1,12 +1,10 @@
-
 default:
   image: docker:stable
   tags:
     - "mac"
 
 variables:
-  CI_DOCKER_REPO: $CI_REGISTRY/witpakul/witpakul-ii-backend/feature/8_CICD_Test
-
+  CI_DOCKER_REPO: $CI_REGISTRY/witpakul/witpakul-ii-backend
 stages:
   - build docker image
 

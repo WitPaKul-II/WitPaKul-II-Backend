@@ -16,6 +16,10 @@ build image:
     - docker build -t $CI_DOCKER_REPO:CI_COMMIT_SHORT_SHA -f Dockerfile .
   when: on_success
 
+before_script:
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -P $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
 push docker image:
   stage: push docker image
   script:

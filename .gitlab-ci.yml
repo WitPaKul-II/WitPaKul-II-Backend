@@ -1,0 +1,25 @@
+
+default:
+  image: docker:stable
+  tags:
+    - "mac"
+
+variables:
+  CI_DOCKER_REPO: $CI_REGISTRY/witpakul/witpakul-ii-backend/feature/8_CICD_Test
+
+stages:
+  - build docker image
+
+before_script:
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -P $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build and push:
+  stage: build docker image
+  script:
+    - docker build -t $CI_DOCKER_REPO:CI_COMMIT_SHORT_SHA -f Dockerfile
+    - docker push $CI_DOCKER_REPO:CI_COMMIT_SHORT_SHA
+
+  only:
+    refs:
+      - merge_requests

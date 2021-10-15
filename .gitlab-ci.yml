@@ -13,7 +13,7 @@ stages:
 build image:
   stage: build docker image
   script:
-    - docker build -t $CI_DOCKER_REPO:CI_COMMIT_SHORT_SHA -f Dockerfile .
+    - docker build -t $CI_DOCKER_REPO:latest -f Dockerfile .
   when: on_success
 
 before_script:
@@ -23,7 +23,7 @@ before_script:
 push docker image:
   stage: push docker image
   script:
-    - docker push $CI_DOCKER_REPO:CI_COMMIT_SHORT_SHA
+    - docker push $CI_DOCKER_REPO:latest
   # only:
   #   refs:
   #     - master

@@ -16,5 +16,9 @@ export class ProductImagesService {
     async remove(id: number): Promise<void> {
         await this.productImagesRepository.delete(id);
     }
-
+    
+    async create(obj): Promise<ProductImages> {
+        const productImages = this.productImagesRepository.create({product_code: obj.product_code, image_url: obj.image_url})
+        return this.productImagesRepository.save(productImages);
+    }
 }

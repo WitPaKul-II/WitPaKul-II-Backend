@@ -28,8 +28,11 @@ export class ProductService {
         
     //  do it in midterm 
     async create(product: Products): Promise<Products> {
-        const Products = await this.productRepository.findOne(product.product_code);
-        if (Products) {
+        const checking_product = await this.productRepository.findOne(product.product_code);
+        if (!product.product_code) {
+            throw new NotAcceptableException(`productcode ${product.product_code} invalid`);
+        }
+        if (checking_product && checking_product.product_code === product.product_code) {
             throw new NotAcceptableException(`productcode ${product.product_code} already existed`);
         }
         return this.productRepository.save(product);

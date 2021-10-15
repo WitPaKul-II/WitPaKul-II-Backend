@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res, UploadedFiles, UseInterceptors, Headers } from '@nestjs/common';
+import { EntitySchema } from 'typeorm';
 import { Response } from 'express';
 import { Products } from './entities/products.entity'
 import { ProductService } from './product.service';
+import { ProductImagesService } from '../images/productImages.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uploadservice } from 'src/upload/uploadservice';
@@ -13,7 +15,7 @@ import { ColorsDto } from './dto/colors.dto';
 // @Controller('products')
 @Controller()
 export class ProductController {
-    constructor(private productService: ProductService) { }
+    constructor(private productService: ProductService, private productImagesService: ProductImagesService) { }
 
 
     // http://localhost:3000/findAll/product
@@ -43,8 +45,11 @@ export class ProductController {
         })
     }))
     
-    uploadfile(@UploadedFiles() image): string {
-        return "Success";
+    async uploadfile(@UploadedFiles() image, @Headers() headers){
+        return await this.productImagesService.create({
+            product_code: headers.product_code,
+            image_url: headers.filename
+        });
     }
     //  do it in midterm 
                                    

@@ -37,6 +37,7 @@ pull image:
 deploy container:
   stage: deploy
   script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker-compose down
     - docker-compose up -d
 

@@ -34,7 +34,6 @@ pull image:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_DOCKER_REPO:latest
 
-  # - docker stop $(docker ps -a -q) || true && docker rm $(docker ps -a -q) || true 
   # only:
   #   refs:
   #     - master

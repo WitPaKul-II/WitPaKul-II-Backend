@@ -29,8 +29,8 @@ push docker image:
 pull image:    
   stage: pull docker image
   script:
-    - docker images -q;
-    - docker rmi $(docker images -q);
+    # - docker images -q;
+    # - docker rmi $(docker images -q);
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_DOCKER_REPO:latest
 

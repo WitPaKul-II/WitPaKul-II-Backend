@@ -1,3 +1,4 @@
+
 default:
   image: docker:stable
   tags:
@@ -9,6 +10,7 @@ variables:
 stages:
   - build docker image
   - push docker image
+  - pull docker image
 
 build image:
   stage: build docker image
@@ -24,6 +26,12 @@ push docker image:
   stage: push docker image
   script:
     - docker push $CI_DOCKER_REPO:latest
+
+pull image:    
+  stage: pull docker image
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_DOCKER_REPO:latest
   # only:
   #   refs:
   #     - master

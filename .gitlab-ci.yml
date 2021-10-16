@@ -21,6 +21,8 @@ build image:
 before_script:
   - docker info
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker version
+  - docker-compose version
 
 push docker image:
   stage: push docker image
@@ -37,7 +39,6 @@ pull image:
 deploy container:
   stage: deploy
   script:
-    - cd ~Back-End/witpakul-ii-backend/
     - docker-compose down
     - docker-compose up -d
 

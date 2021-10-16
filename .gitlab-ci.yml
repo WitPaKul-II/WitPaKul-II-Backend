@@ -10,6 +10,7 @@ stages:
   - build docker image
   - push docker image
   - pull docker image
+  - deploy
 
 build image:
   stage: build docker image
@@ -32,6 +33,12 @@ pull image:
     - docker rmi $(docker images | grep "<none>" | awk '{print $3}')
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_DOCKER_REPO:latest
+
+deploy container:
+  stage: deploy
+  script:
+    - docker-compose down
+    - docker-compose up -d
 
   # only:
   #   refs:

@@ -1,5 +1,7 @@
 default:
-  image: docker:stable
+  image:
+    name: docker/compose:latest
+    entrypoint: ["/bin/sh", "-c"]
   tags:
     - "backend"
 
@@ -20,9 +22,9 @@ build image:
 
 before_script:
   - docker info
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker version
   - docker-compose version
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 push docker image:
   stage: push docker image

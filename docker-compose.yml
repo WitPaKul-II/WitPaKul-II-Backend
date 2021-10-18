@@ -2,7 +2,7 @@ version: "3.3"
 services:
     backend:
         build: .
-        image: backend
+        image: registry.gitlab.com/witpakul/witpakul-ii-backend:latest
         container_name: WitPaKul_Backend
         volumes:
            - ./data:/app/data/

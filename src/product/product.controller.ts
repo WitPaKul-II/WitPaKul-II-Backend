@@ -12,31 +12,30 @@ import { CreateimageDto } from './dto/createimage.dto';
 import { UpdateproductDto } from './dto/updateproduct.dto';
 import { ColorsDto } from './dto/colors.dto';
 
-// @Controller('products')
+
 @Controller()
 export class ProductController {
     constructor(private productService: ProductService, private productImagesService: ProductImagesService) { }
-
 
     // http://localhost:3000/findAll/product
     @Get("findAll/product")
     async findAll(): Promise<Products[]> {
         return await this.productService.findAll();
     }
+
     // productcode
     @Get("productcode/:productcode")
     async findOne(@Param("productcode") productcode: number): Promise<Products> {
         return await this.productService.findOne(productcode);
     }
-    //getimages
+ 
     // http://localhost:3000/images/....path
     @Get("images/:imagePath")
     async seeUploadFile(@Param('imagePath') image, @Res() res) {
         return res.sendFile(image, { root: './data/images/item' });
     }
-    //uploadfile ได้
-    //http://localhost:3000/images/
     
+    //http://localhost:3000/images/ 
     @Post("images")
     @UseInterceptors(FileInterceptor('image', {
         storage: diskStorage({
@@ -51,8 +50,7 @@ export class ProductController {
             image_url: headers.filename
         });
     }
-    //  do it in midterm 
-                                   
+                              
     @Post("addproductId")
     async create( @Body() createproductDto: CreateproductDto){
         return await this.productService.create(createproductDto);

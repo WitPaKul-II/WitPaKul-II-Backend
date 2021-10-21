@@ -36,12 +36,9 @@ export class UpdateproductDto {
     @IsNotEmpty()
     brand: Brands;
 
-    // @IsArray()
-    
     @IsString()
     @IsNotEmpty()
     colors: Colors[];
-    // colors:{ Colors: ["color_id", "product_code"]; }
 
     @IsString()
     product_images: ProductImages[];

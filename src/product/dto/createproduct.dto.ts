@@ -38,9 +38,7 @@ export class CreateproductDto {
     @IsString()
     colors: Colors[];
 
-    // @IsString()
-    // @IsNotEmpty()
-    // colors: Colors[];
+
     @IsString()
     @IsNotEmpty()
     product_images: ProductImages[];
@@ -49,8 +47,5 @@ export class CreateproductDto {
     @IsNotEmpty()
     product_activitys: ProductActivitys[];
 
-    // @IsString()
-    // @IsNotEmpty()
-    // image_url: string;
 }
 

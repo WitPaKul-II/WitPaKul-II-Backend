@@ -19,10 +19,10 @@ build image:
   script:
     - docker build -t $CI_DOCKER_REPO:$CI_COMMIT_BRANCH -f Dockerfile .
   when: on_success
-  # only:
-  #   refs:
-  #     - master
-  #     - develop
+  only:
+    refs:
+      - master
+      - develop
 
 before_script:
   - docker info
@@ -35,10 +35,10 @@ push docker image:
   stage: push docker image
   script:
     - docker push $CI_DOCKER_REPO:$CI_COMMIT_BRANCH
-  # only:
-  #   refs:
-  #     - master
-  #     - develop
+  only:
+    refs:
+      - master
+      - develop
 
 pull image:    
   stage: pull docker image
@@ -47,17 +47,17 @@ pull image:
     - docker rmi $(docker images | grep "<none>" | awk '{print $3}')
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_DOCKER_REPO:develop
-  # only:
-  #   refs:
-  #     - master
-  #     - develop
+  only:
+    refs:
+      - master
+      - develop
 
 deploy container:
   stage: deploy docker container
   script:
     - docker-compose up -d
-  # only:
-  #   refs:
-  #     - master
-  #     - develop
+  only:
+    refs:
+      - master
+      - develop
  

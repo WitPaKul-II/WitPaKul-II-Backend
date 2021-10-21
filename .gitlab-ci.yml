@@ -44,7 +44,7 @@ pull image:
   stage: pull docker image
   script:
     - docker-compose down
-    # - docker rmi $(docker images | grep "<none>" | awk '{print $3}')
+    - docker rmi $(docker images | grep "<none>" | awk '{print $3}')
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_DOCKER_REPO:develop
   only:

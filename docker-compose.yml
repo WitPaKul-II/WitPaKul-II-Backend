@@ -5,7 +5,7 @@ services:
         image: registry.gitlab.com/witpakul/witpakul-ii-backend:develop
         container_name: WitPaKul_Backend
         volumes:
-           - ./data:/app/data
+           - ~/Back-End/witpakul-ii-backend/data:/app/data
 
 networks:
     default:

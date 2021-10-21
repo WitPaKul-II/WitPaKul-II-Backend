@@ -12,7 +12,8 @@ stages:
   - build docker image
   - push docker image
   - pull docker image
-  - deploy
+  - deploy docker container
+  - release
 
 build image:
   stage: build docker image
@@ -44,6 +45,25 @@ deploy container:
   script:
     - docker-compose up -d
 
+release_job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo 'running release_job'
+  
+release:
+  name: 'Release $CI_COMMIT_TAG'
+  description: 'Created using the release-cli $EXTRA_DESCRIPTION'
+  tag_name: '$CI_COMMIT_TAG'
+  milestones:
+    - 'm1'
+    - 'm2'
+    - 'm3'
+released_at: '2020-07-15T08:00:00Z'
+
   # only:
   #   refs:
   #     - master
+

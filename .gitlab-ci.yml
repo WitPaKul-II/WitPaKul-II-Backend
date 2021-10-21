@@ -34,7 +34,7 @@ push docker image:
   script:
     - docker push $CI_DOCKER_REPO:latest
 
-pull image:    
+pull image:
   stage: pull docker image
   script:
     - docker-compose down
@@ -47,58 +47,15 @@ deploy container:
   script:
     - docker-compose up -d
 
-generate_tag:
-  stage: prepare
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANC
-  script:
-    - echo "TAG=$(cat VERSION)" > tag.env
-  artifacts:
-    reports:
-      dotenv: tag.env
 
-auto-release-master:
-  image: registry.gitlab.com/gitlab-org/release-cli
-  needs:
-    - job: generate_tag
-      artifacts: true
+release_job:
   stage: release
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never                                
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH 
   script:
-    - echo "Release $TAG"
-  release:
-    name: "Release $TAG"
-    description: "Created using the release-cli $EXTRA_DESCRIPTION"
-    tag_name: v$TAG
-    ref: $CI_COMMIT_SHA
-    milestones:
-      - 'm2'
-
-
-
-# release_job:
-#   stage: release
-#   image: registry.gitlab.com/gitlab-org/release-cli:latest
-#   rules:
-#     - if: $CI_COMMIT_TAG
-#   script:
-#     - echo 'running release_job'
-
-#   release:
-#    name: 'Release $CI_COMMIT_TAG'
-#    description: 'Created using the release-cli $EXTRA_DESCRIPTION'
-#    tag_name: '$CI_COMMIT_TAG'
-#    milestones:
-#       - 'm1'
-#       - 'm2'
-#       - 'm3'
+    - echo 'running releasejob'
+    - git tag -a "Release$(date +%Y-%m-%d)" -m "Auto-Release"
+    - git push api-origin "Release_$(date +%Y-%m-%d)"
 
   # only:
   #   refs:
   #     - master
- 
+  #     - develop

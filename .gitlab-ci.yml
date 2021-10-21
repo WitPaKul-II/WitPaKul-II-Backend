@@ -101,4 +101,4 @@ auto-release-master:
   # only:
   #   refs:
   #     - master
-  #     - develop
+ 

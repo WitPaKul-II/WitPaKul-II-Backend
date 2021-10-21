@@ -4,36 +4,17 @@ import { Brands } from './entities/brands.entity'
 import { BrandsService } from './brands.service';
 
 @Controller('brands')
-export class BrandsController { 
-    constructor(private brandsService : BrandsService ) { }
+export class BrandsController {
+    constructor(private brandsService: BrandsService) { }
 
-    @Get()
-    async findAll(@Res() res: Response) {
-        const response = await this.brandsService.findAll()
-        res.status(HttpStatus.OK).json({ payload: response })
-    }
 
-    @Get(":id")
-    async findOne(@Param() id: number, @Res() res: Response) {
-        const response = await this.brandsService.findOne(id)
-        res.status(HttpStatus.OK).json({ payload: response })
+    @Get("findAll")
+    async findAll(): Promise<Brands[]> {
+        return await this.brandsService.findAll();
     }
-
-    @Post()
-    async create(@Body() createUserDto: Brands, @Res() res: Response) {
-        const response = await this.brandsService.create(createUserDto)
-        res.status(HttpStatus.OK).json({ payload: response })
+    @Get("/:brands")
+    async findOne(@Param("brands") brands: number): Promise<Brands> {
+        return await this.brandsService.findOne(brands);
     }
-
-    @Put(":id")
-    async update(@Param() id: number, @Body() createUserDto: Brands, @Res() res: Response) {
-        this.brandsService.update(id, createUserDto)
-        res.status(HttpStatus.OK).json({ message: "success" })
-    }
-
-    @Delete(":id")
-    async delete(@Param() id: number, @Res() res: Response) {
-        this.brandsService.remove(id)
-        res.status(HttpStatus.OK).json({ message: "success" })
-    }
+   
 }

@@ -1,0 +1,63 @@
+default:
+  image:
+    name: docker/compose:latest
+    entrypoint: ["/bin/sh", "-c"]
+  tags:
+    - "backend"
+
+variables:
+  CI_DOCKER_REPO: $CI_REGISTRY/witpakul/witpakul-ii-backend
+
+stages:
+  - build docker image
+  - push docker image
+  - pull docker image
+  - deploy docker container
+
+build image:
+  stage: build docker image
+  script:
+    - docker build -t $CI_DOCKER_REPO:$CI_COMMIT_BRANCH -f Dockerfile .
+  when: on_success
+  only:
+    refs:
+      - master
+      - develop
+
+before_script:
+  - docker info
+  - docker version
+  - docker-compose version
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+
+push docker image:
+  stage: push docker image
+  script:
+    - docker push $CI_DOCKER_REPO:$CI_COMMIT_BRANCH
+  only:
+    refs:
+      - master
+      - develop
+
+pull image:    
+  stage: pull docker image
+  script:
+    - docker-compose down
+    - docker rmi $(docker images | grep "<none>" | awk '{print $3}')
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_DOCKER_REPO:develop
+  only:
+    refs:
+      - master
+      - develop
+
+deploy container:
+  stage: deploy docker container
+  script:
+    - docker-compose up -d
+  only:
+    refs:
+      - master
+      - develop
+ 

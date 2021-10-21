@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import {Brands} from './entities/brands.entity'
+import { Brands } from './entities/brands.entity'
 @Injectable()
-export class BrandsService { 
+export class BrandsService {
     constructor(
         @InjectRepository(Brands)
         private BrandsRepository: Repository<Brands>,
@@ -13,20 +13,11 @@ export class BrandsService {
         return this.BrandsRepository.find();
     }
 
-    findOne(id: number): Promise<Brands> {
-        return this.BrandsRepository.findOne(id);
-    }
-
-    create(Brands: Brands): Promise<Brands> {
-        return this.BrandsRepository.save(Brands);
-    }
-
-    async update(id: number, Brands: Brands) {
-        await this.BrandsRepository.update(id, Brands)
-    }
-
-    async remove(id: number): Promise<void> {
-        await this.BrandsRepository.delete(id);
-    }
+    async findOne(id: number): Promise<Brands> {
+        const Brands = await this.BrandsRepository.findOne(id);
+        if (!Brands) {
+            throw new NotFoundException(`Brands ${id} not found`);
+        }
+        return Brands;}
 
 }

@@ -15,6 +15,7 @@ import { BrandsModule } from './ฺbrands/brands.module';
     // host: 'localhost',
     //ENV for VM
     host: 'WitPaKul_DB', 
+    // host: 'localhost', 
     port: 3306,
     username: 'root',
     // password: 'mysql',

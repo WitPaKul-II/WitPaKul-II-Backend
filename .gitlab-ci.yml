@@ -44,8 +44,8 @@ deploy container:
   script:
     - docker-compose up -d
 
-only:
-  refs:
+  only:
+   refs:
     - master
     - develop
  

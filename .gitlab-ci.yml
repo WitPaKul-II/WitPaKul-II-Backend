@@ -17,7 +17,7 @@ stages:
 build image:
   stage: build docker image
   script:
-    - docker build -t $CI_DOCKER_REPO:CI_COMMIT_BRANCH -f Dockerfile .
+    - docker build -t $CI_DOCKER_REPO:$CI_COMMIT_BRANCH -f Dockerfile .
   when: on_success
   only:
     refs:
@@ -34,7 +34,7 @@ before_script:
 push docker image:
   stage: push docker image
   script:
-    - docker push $CI_DOCKER_REPO:CI_COMMIT_BRANCH
+    - docker push $CI_DOCKER_REPO:$CI_COMMIT_BRANCH
   only:
     refs:
       - master

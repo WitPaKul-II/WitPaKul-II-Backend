@@ -55,7 +55,7 @@ export class ProductController {
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
-        destination: uploadservice.destinationPath,
+        destination: uploadservice.destinationProductPath,
         filename: uploadservice.customFileName,
       }),
     }),

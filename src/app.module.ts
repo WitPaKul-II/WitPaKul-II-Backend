@@ -7,6 +7,7 @@ import { ProductModule } from './product/product.module';
 import { ColorsModule } from './colors/colors.module';
 import { ProductImagesModule } from './images/productImages.module';
 import { BrandsModule } from './ฺbrands/brands.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { BrandsModule } from './ฺbrands/brands.module';
     ],
     synchronize: false,
     
-  }), UsersModule,ProductModule,ColorsModule,ProductImagesModule,BrandsModule],
+  }), UsersModule,ProductModule,ColorsModule,ProductImagesModule,BrandsModule,AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

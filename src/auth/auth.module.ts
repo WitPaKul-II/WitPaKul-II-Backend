@@ -6,6 +6,7 @@ import { LocalStrategy } from './local.strategy';
 import { SessionSerializer } from './session.serializer';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { jwtConstants } from './constants';
 
 //Session Module
 // @Module({
@@ -19,8 +20,8 @@ import { JwtStrategy } from './jwt.strategy';
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'WitPaKul',
-      signOptions: { expiresIn: '60s' },
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '180s' },
     }),
   ],
   providers: [AuthService, LocalStrategy,JwtStrategy],

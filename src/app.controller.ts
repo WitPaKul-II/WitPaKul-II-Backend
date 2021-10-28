@@ -20,16 +20,18 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+    
+  @UseGuards(JwtAuthGuard)
+  @Get('protected')
+  getHello2(@Request() req): string {
+    return req.user;
+  }
+  
   //Session 
   // @UseGuards(AuthenticatedGuard)
   // @Get('protected')
   // getHello2(@Request() req): string {
   //   return req.user;
   // }
-  
-  @UseGuards(JwtAuthGuard)
-  @Get('protected')
-  getHello2(@Request() req): string {
-    return req.user;
-  }
+
 }

@@ -60,7 +60,8 @@ export class UserService {
     if (!dd) {
       throw new NotFoundException(`userid not found`);
     }
-    return this.userRepository.delete(userid);
+    this.userRepository.delete(userid)
+    return `Delete User:${userid} Successful `;
   }
   
   

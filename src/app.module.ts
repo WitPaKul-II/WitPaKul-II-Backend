@@ -8,7 +8,8 @@ import { ColorsModule } from './colors/colors.module';
 import { ProductImagesModule } from './images/productImages.module';
 import { BrandsModule } from './ฺbrands/brands.module';
 import { AuthModule } from './auth/auth.module';
-
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './authorization/roles.guard';
 @Module({
   imports: [
     TypeOrmModule.forRoot({

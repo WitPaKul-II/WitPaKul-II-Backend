@@ -1,14 +1,18 @@
-import { Controller, Get, Post, UseGuards,Request, Res } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards,Request, Res, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { AuthenticatedGuard } from './auth/authenticated.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { Response } from 'express';
+import { RolesGuard } from './authorization/roles.guard';
+import { UserService } from './users/users.service';
+import { Users } from './users/entities/users.entity';
+import { CreateuserDto } from './users/dto/createuser.dto';
 
 @Controller()
 export class AppController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService,private userService: UserService) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -16,12 +20,13 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  // @Post('/logout')
-  // async logout(@Res({ passthrough: true }) res: Response): Promise<boolean> {
-  //   res.clearCookie('jwt');
-  //   return true;
-  // }
-    
+  // @UseGuards(LocalAuthGuard)
+  @Post('/register')
+  async register(@Body() createuserDto: CreateuserDto) {
+    return await this.userService.create(createuserDto);
+  }
+
+  
   @UseGuards(JwtAuthGuard)
   @Get('protected')
   getHello2(@Request() req): string {

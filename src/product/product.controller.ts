@@ -11,6 +11,7 @@ import {
   UploadedFiles,
   UseInterceptors,
   Headers,
+  UseGuards,
 } from '@nestjs/common';
 import { EntitySchema } from 'typeorm';
 import { Response } from 'express';
@@ -24,12 +25,17 @@ import { CreateproductDto } from './dto/createproduct.dto';
 import { CreateimageDto } from './dto/createimage.dto';
 import { UpdateproductDto } from './dto/updateproduct.dto';
 import { ColorsDto } from './dto/colors.dto';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/authorization/roles.guard';
+import { Roles } from 'src/authorization/roles.decorator';
 
 @Controller()
 export class ProductController {
   constructor(
     private productService: ProductService,
     private productImagesService: ProductImagesService,
+    private authService: AuthService,
   ) {}
 
   // http://localhost:3000/findAll/product
@@ -39,8 +45,13 @@ export class ProductController {
   }
 
   // productcode
+ 
+  @UseGuards(JwtAuthGuard)
   @Get('productcode/:productcode')
   async findOne(@Param('productcode') productcode: number): Promise<Products> {
+    
+    // this.authService.checkUserRole();
+
     return await this.productService.findOne(productcode);
   }
 
@@ -67,11 +78,13 @@ export class ProductController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('addproductId')
   async create(@Body() createproductDto: CreateproductDto) {
     return await this.productService.create(createproductDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('edit')
   async updateproduct(@Body() updateproductDto: UpdateproductDto) {
     const productcode = updateproductDto.product_code;
@@ -79,6 +92,8 @@ export class ProductController {
     console.log(productcode);
     return await this.productService.update(productcode, updateproductDto);
   }
+
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:deleteproductId')
   async deleteproduct(@Param('deleteproductId') productcode: string) {
     return await this.productService.remove(productcode);

@@ -24,6 +24,7 @@ import { uploadservice } from 'src/upload/uploadservice';
 import { diskStorage } from 'multer';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/authorization/roles.decorator';
 @Controller('users')
 export class UsersController {
   constructor(
@@ -35,7 +36,7 @@ export class UsersController {
   async findAll(): Promise<Users[]> {
     return await this.usersService.findAll();
   }
-
+  
   @UseGuards(JwtAuthGuard)
   @Get('userid/:userid')
   async findOne(@Param('userid') user_id: number): Promise<Users> {

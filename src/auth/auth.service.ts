@@ -34,8 +34,8 @@ export class AuthService {
   }
 
 
-  async checkUserRole(user_id: number) {
-    const user_type = await (await this.userService.findOne(user_id)).user_type;
+ async checkUserRole(payload: any) {
+    const user_type = await (await this.userService.findOne(payload.user_id)).user_type;
 
     if (user_type.type_id == 'C01') {
       return user_type.type_name;
@@ -43,6 +43,5 @@ export class AuthService {
       return user_type.type_name;
     
   }
- 
 
 }

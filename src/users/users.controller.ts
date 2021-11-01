@@ -23,26 +23,31 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadservice } from 'src/upload/uploadservice';
 import { diskStorage } from 'multer';
 import { AuthService } from 'src/auth/auth.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { Roles } from 'src/authorization/roles.decorator';
+import { RolesGuard } from 'src/authorization/roles.guard';
+import { ROLES } from 'src/authorization/ROLES';
 @Controller('users')
 export class UsersController {
   constructor(
     private usersService: UserService,
     private authService: AuthService,
   ) {}
-
+   
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Get('findAll')
   async findAll(): Promise<Users[]> {
     return await this.usersService.findAll();
   }
   
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.Customer)
   @Get('userid/:userid')
   async findOne(@Param('userid') user_id: number): Promise<Users> {
     return await this.usersService.findOne(user_id);
   }
-
+  
   @Get('username/:username')
   async findOneByUsername(@Param('username') username: string): Promise<Users> {
     return await this.usersService.findOneByUsername(username);
@@ -53,7 +58,8 @@ export class UsersController {
     return await this.usersService.create(createuserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.Customer)
   @Put('edit')
   async updateuser(@Body() updateuserDto: UpdateuserDto) {
     const user_id = updateuserDto.user_id;
@@ -61,13 +67,14 @@ export class UsersController {
     return await this.usersService.update(user_id, updateuserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.Customer)
   @Delete('delete/:deleteuserId')
   async deleteuser(@Param('deleteuserId') userid: number) {
     return await this.usersService.remove(userid);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('images/:imagePath')
   async seeUploadFile(@Param('imagePath') image, @Res() res) {
     return res.sendFile(image, { root: './data/images/users' });

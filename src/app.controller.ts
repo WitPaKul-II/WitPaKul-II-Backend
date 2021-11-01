@@ -1,11 +1,9 @@
 import { Controller, Get, Post, UseGuards,Request, Res, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
-import { AuthenticatedGuard } from './auth/authenticated.guard';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { Response } from 'express';
-import { RolesGuard } from './authorization/roles.guard';
+import { AuthenticatedGuard } from './auth/guard/authenticated.guard';
+import { JwtAuthGuard } from './auth/guard/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/guard/local-auth.guard';
 import { UserService } from './users/users.service';
 import { Users } from './users/entities/users.entity';
 import { CreateuserDto } from './users/dto/createuser.dto';

@@ -26,9 +26,10 @@ import { CreateimageDto } from './dto/createimage.dto';
 import { UpdateproductDto } from './dto/updateproduct.dto';
 import { ColorsDto } from './dto/colors.dto';
 import { AuthService } from 'src/auth/auth.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/authorization/roles.guard';
 import { Roles } from 'src/authorization/roles.decorator';
+import { ROLES } from 'src/authorization/ROLES';
 
 @Controller()
 export class ProductController {
@@ -45,8 +46,8 @@ export class ProductController {
   }
 
   // productcode
- 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Get('productcode/:productcode')
   async findOne(@Param('productcode') productcode: number): Promise<Products> {
     
@@ -78,14 +79,16 @@ export class ProductController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Post('addproductId')
   async create(@Body() createproductDto: CreateproductDto) {
     return await this.productService.create(createproductDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put('edit')
+  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   async updateproduct(@Body() updateproductDto: UpdateproductDto) {
     const productcode = updateproductDto.product_code;
     // console.log(updateproductDto);
@@ -93,7 +96,8 @@ export class ProductController {
     return await this.productService.update(productcode, updateproductDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Delete('delete/:deleteproductId')
   async deleteproduct(@Param('deleteproductId') productcode: string) {
     return await this.productService.remove(productcode);

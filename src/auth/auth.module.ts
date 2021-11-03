@@ -6,6 +6,7 @@ import { LocalStrategy } from './strategy/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { jwtConstants } from './constants';
+import { RefreshStrategy } from './strategy/refresh.strategy';
 
 //Session Module
 // @Module({
@@ -22,7 +23,7 @@ import { jwtConstants } from './constants';
       secret: jwtConstants.secret,
     }),
   ],
-  providers: [AuthService, LocalStrategy ,JwtStrategy],
+  providers: [AuthService, LocalStrategy ,JwtStrategy,RefreshStrategy],
   exports:[AuthService]
 })
 export class AuthModule {}

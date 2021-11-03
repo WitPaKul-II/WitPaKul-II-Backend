@@ -7,6 +7,8 @@ import { LocalAuthGuard } from './auth/guard/local-auth.guard';
 import { UserService } from './users/users.service';
 import { Users } from './users/entities/users.entity';
 import { CreateuserDto } from './users/dto/createuser.dto';
+import { RefreshGuard } from './auth/guard/refresh.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class AppController {
@@ -14,7 +16,7 @@ export class AppController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req): any {
+  public login(@Request() req): any {
     return this.authService.login(req.user);
   }
 
@@ -24,17 +26,27 @@ export class AppController {
     return await this.userService.create(createuserDto),"Register Sucessfull";
   }
 
+  @UseGuards(AuthGuard('refresh'))
+  @Post('/refresh_token')
+  public async Refresh_token(@Request() req):Promise<any> {
+    const access_token = await this.authService.generateAccessToken(req.user);
+    return {
+      access_token: access_token,
+    };
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('/me')
-  async GetUser(@Body() req): Promise<any>{
-    const user = await this.userService.findOne(req.user_id)
+  async GetUser(@Request() req): Promise<any>{
+    // const user = await this.userService.findOne(req.user_id)
+    const user = await this.authService.GetCurrentUser(req.user.user_id)
     console.log(user);
     return user;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('protected')
-  getHello2(@Request() req): string {
+  public getHello2(@Request() req): string {
     return req.user;
   }
   

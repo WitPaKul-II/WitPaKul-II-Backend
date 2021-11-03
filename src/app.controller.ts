@@ -21,10 +21,17 @@ export class AppController {
   // @UseGuards(LocalAuthGuard)
   @Post('/register')
   async register(@Body() createuserDto: CreateuserDto) {
-    return await this.userService.create(createuserDto);
+    return await this.userService.create(createuserDto),"Register Sucessfull";
   }
 
-  
+  @UseGuards(JwtAuthGuard)
+  @Get('/me')
+  async GetUser(@Body() req): Promise<any>{
+    const user = await this.userService.findOne(req.user_id)
+    console.log(user);
+    return user;
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('protected')
   getHello2(@Request() req): string {

@@ -1,10 +1,7 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -22,26 +19,42 @@ export class AuthService {
     return null;
   }
 
+  async valadaterefreshToken(){
+    
+  }
+
   async login(user: any) {
-    const payload = {
+    const Access_Token = await this.generateAccessToken(user);
+    const Refresh_Token = await this.generateRefreshToken(user);
+    return {
+      access_token: Access_Token,
+      refresh_token: Refresh_Token,
+    };
+  }
+
+  async generateAccessToken(user: any): Promise<string>{
+    const payloadAccessToken = {
       user_id: user.user_id,
       user_type: user.user_type,
     };
 
-    return {
-      access_token: this.jwtService.sign(payload),
+    const access_token = await this.jwtService.signAsync(payloadAccessToken, {
+      expiresIn: jwtConstants.expiredateToken,
+    });
+
+    return access_token;
+  }
+
+  async generateRefreshToken(user: any): Promise<string>{
+    const User = await this.userService.findOne(user.user_id);
+    const payloadRefreshToken = {
+      user_id: User.user_id,
+      user_name: User.firstname + ' ' + User.lastname,
     };
+
+    const refresh_token = await this.jwtService.signAsync(payloadRefreshToken, {
+      expiresIn: jwtConstants.expiredateRefreshtoken,
+    });
+    return refresh_token;
   }
-
-
- async checkUserRole(payload: any) {
-    const user_type = await (await this.userService.findOne(payload.user_id)).user_type;
-
-    if (user_type.type_id == 'C01') {
-      return user_type.type_name;
-    } 
-      return user_type.type_name;
-    
-  }
-
 }

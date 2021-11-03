@@ -41,8 +41,7 @@ export class UsersController {
     return await this.usersService.findAll();
   }
   
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('roles', ROLES.Customer)
+  @UseGuards(JwtAuthGuard)
   @Get('userid/:userid')
   async findOne(@Param('userid') user_id: number): Promise<Users> {
     return await this.usersService.findOne(user_id);
@@ -58,8 +57,7 @@ export class UsersController {
     return await this.usersService.create(createuserDto);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('roles', ROLES.Customer)
+  @UseGuards(JwtAuthGuard)
   @Put('edit')
   async updateuser(@Body() updateuserDto: UpdateuserDto) {
     const user_id = updateuserDto.user_id;
@@ -68,8 +66,7 @@ export class UsersController {
   }
 
   
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('roles', ROLES.Customer)
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:deleteuserId')
   async deleteuser(@Param('deleteuserId') userid: number) {
     return await this.usersService.remove(userid);

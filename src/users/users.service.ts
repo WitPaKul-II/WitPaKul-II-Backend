@@ -35,16 +35,19 @@ export class UserService {
   }
 
   async create(user: Users): Promise<Users> {
-    const checking_users = await this.userRepository.findOne(user.user_id);
-    if (!user.user_id) {
-      throw new NotAcceptableException(`userid ${user.user_id} invalid`);
+    const checking_users = await this.userRepository.findOne({ where: { email: `${user.email}` } });
+    if (!checking_users) {
+      throw new NotAcceptableException(`This user is invalid`);
     }
     if (checking_users && checking_users.user_id === user.user_id) {
       throw new NotAcceptableException(
         `userid ${user.user_id} already existed`,
       );
+    } else {
+      console.log("Save user Sucessful");
+      return this.userRepository.save(user);
     }
-    return this.userRepository.save(user);
+
   }
 
   async update(user_id: number, user: UpdateuserDto) {

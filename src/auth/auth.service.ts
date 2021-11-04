@@ -68,11 +68,4 @@ export class AuthService {
     return null;
   }
 
-  async GetCurrentUser(user_id: number): Promise<any> {
-    const user = await this.userService.findOne(user_id);
-    if (user) {
-      return user;
-    }
-    return 'Cannot find this User';
-  }
 }

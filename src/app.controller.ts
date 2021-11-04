@@ -38,8 +38,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('/me')
   async GetUser(@Request() req): Promise<any>{
-    // const user = await this.userService.findOne(req.user_id)
-    const user = await this.authService.GetCurrentUser(req.user.user_id)
+    const user = await this.userService.findOne(req.user.user_id)
     console.log(user);
     return user;
   }

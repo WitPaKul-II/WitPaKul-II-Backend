@@ -16,7 +16,7 @@ export class AuthService {
     // const passwordChange = await bcrypt.hash(password,10);
     // console.log(passwordChange);
 
-    if (user && bcrypt.compare(user.password === password)) {
+    if (user && bcrypt.compare(password,user.password)) {
       const { password, username, ...rest } = user;
       return rest;
     }

@@ -7,7 +7,7 @@ import { LocalAuthGuard } from './auth/guard/local-auth.guard';
 import { UserService } from './users/users.service';
 import { Users } from './users/entities/users.entity';
 import { CreateuserDto } from './users/dto/createuser.dto';
-import { RefreshGuard } from './auth/guard/refresh.guard';
+import { RefreshGuard } from './auth/strategy/refresh.guard';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller()

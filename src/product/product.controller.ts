@@ -46,8 +46,6 @@ export class ProductController {
   }
 
   // productcode
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('roles', ROLES.ADMIN)
   @Get('productcode/:productcode')
   async findOne(@Param('productcode') productcode: number): Promise<Products> {
     

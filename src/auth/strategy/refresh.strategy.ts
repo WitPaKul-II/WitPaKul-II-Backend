@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
 import { Strategy } from 'passport-jwt';
@@ -21,9 +21,12 @@ export class RefreshStrategy extends PassportStrategy(Strategy,'refresh') {
   
     const user = await this.authService.ValidateRefreshToken(payload);
     console.log(user);
+    if (user) {
+      return {
+        user_id: user.user_id,
+      };
+    }
     
-    return {
-      user_id: user.user_id,
-    };
+    throw new NotFoundException;
   }
 }

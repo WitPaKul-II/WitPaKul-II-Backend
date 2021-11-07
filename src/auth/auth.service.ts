@@ -13,10 +13,12 @@ export class AuthService {
     console.log('validate-authservice');
     const user = await this.userService.findOneByUsername(username);
     const bcrypt = require('bcrypt');
-    // const passwordChange = await bcrypt.hash(password,10);
-    // console.log(passwordChange);
-
-    if (user && bcrypt.compare(password,user.password)) {
+    const passwordChange = await bcrypt.hash(password,10);
+    console.log(passwordChange);
+    console.log(user.password);
+    console.log(await bcrypt.compare(password,user.password));
+    
+    if (user && await bcrypt.compare(password,user.password)) {
       const { password, username, ...rest } = user;
       return rest;
     }

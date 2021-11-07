@@ -41,12 +41,15 @@ export class UsersController {
     return await this.usersService.findAll();
   }
   
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Get('userid/:userid')
   async findOne(@Param('userid') user_id: number): Promise<Users> {
     return await this.usersService.findOne(user_id);
   }
   
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('roles', ROLES.ADMIN)
   @Get('username/:username')
   async findOneByUsername(@Param('username') username: string): Promise<Users> {
     return await this.usersService.findOneByUsername(username);
@@ -72,11 +75,13 @@ export class UsersController {
     return await this.usersService.remove(userid);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('images/:imagePath')
   async seeUploadFile(@Param('imagePath') image, @Res() res) {
     return res.sendFile(image, { root: './data/images/users' });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('images')
   @UseInterceptors(
     FileInterceptor('image', {

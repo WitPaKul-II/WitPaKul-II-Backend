@@ -55,8 +55,6 @@ export class ProductController {
   }
 
   // http://localhost:3000/images/....path
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('roles', ROLES.ADMIN)
   @Get('images/:imagePath')
   async seeUploadFile(@Param('imagePath') image, @Res() res) {
     return res.sendFile(image, { root: './data/images/item' });

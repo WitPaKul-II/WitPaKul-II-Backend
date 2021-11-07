@@ -75,7 +75,6 @@ export class UsersController {
     return await this.usersService.remove(userid);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('images/:imagePath')
   async seeUploadFile(@Param('imagePath') image, @Res() res) {
     return res.sendFile(image, { root: './data/images/users' });

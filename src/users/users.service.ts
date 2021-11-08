@@ -38,7 +38,7 @@ export class UserService {
   async create(user: Users): Promise<Users> {
     const checking_users = await this.userRepository.findOne({ where: { email: `${user.email}` } });
     if (checking_users) {
-      throw new NotAcceptableException(`This user is invalid`);
+      throw new NotAcceptableException(`This email is invalid`);
     }
     if (checking_users && checking_users.user_id === user.user_id) {
       throw new NotAcceptableException(

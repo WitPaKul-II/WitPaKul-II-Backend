@@ -89,6 +89,7 @@ export class ProductController {
   // @UseGuards(JwtAuthGuard)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('roles', ROLES.ADMIN)
+  @Put('edit')
   async updateproduct(@Body() updateproductDto: UpdateproductDto) {
     const productcode = updateproductDto.product_code;
     // console.log(updateproductDto);

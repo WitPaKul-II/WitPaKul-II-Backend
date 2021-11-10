@@ -33,6 +33,15 @@ export class ProductService {
     return Products;
   }
 
+  async findOneByQuery(productdata: any): Promise<Products> {
+    const Products = await this.productRepository.findOne(productdata);
+    console.log(productdata);
+    
+    if (!Products) {
+      throw new NotFoundException(`Not found`);
+    }
+    return Products;
+  }
   //  do it in midterm
   async create(product: Products): Promise<Products> {
     const checking_product = await this.productRepository.findOne(

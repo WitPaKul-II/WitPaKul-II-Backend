@@ -18,7 +18,7 @@ import { Response } from 'express';
 import { Users } from './entities/users.entity';
 import { UserService } from './users.service';
 import { CreateuserDto } from './dto/createuser.dto';
-import { UpdateuserDto } from './dto/Updateuser.dto copy';
+import { UpdateuserDto } from './dto/updateuser.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadservice } from 'src/upload/uploadservice';
 import { diskStorage } from 'multer';

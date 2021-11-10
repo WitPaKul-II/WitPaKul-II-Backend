@@ -17,5 +17,6 @@ import { RolesGuard } from 'src/authorization/roles.guard';
   imports: [TypeOrmModule.forFeature([Products, ProductImages, Colors]),forwardRef(() => AuthModule)],
   controllers: [ProductController],
   providers: [ProductService, ProductImagesService],
+  exports:[ProductService]
 })
 export class ProductModule {}

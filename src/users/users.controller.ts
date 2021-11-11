@@ -13,6 +13,7 @@ import {
   Headers,
   UseGuards,
   UnauthorizedException,
+  NotAcceptableException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { Users } from './entities/users.entity';
@@ -57,7 +58,17 @@ export class UsersController {
 
   @Post('adduser')
   async create(@Body() createuserDto: CreateuserDto) {
-    return await this.usersService.create(createuserDto);
+    try {
+      await this.usersService.findOneByQuery({
+        where: [
+          { username: `${createuserDto.username}` },
+          { password: `${createuserDto.password}` },
+        ],
+      });
+    } catch (NotFoundException) {
+      return await this.usersService.create(createuserDto);
+    }
+    throw new NotAcceptableException('Some information is invalide');
   }
 
   @UseGuards(JwtAuthGuard)

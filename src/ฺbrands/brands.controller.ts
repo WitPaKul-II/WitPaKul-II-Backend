@@ -14,8 +14,8 @@ import {
 import { Response } from 'express';
 import { Brands } from './entities/brands.entity';
 import { BrandsService } from './brands.service';
-import { createBrandsDto } from './entities/createbrands.dto';
-import { UpdateBrandsDto } from './entities/updatebrands.dto';
+import { createBrandsDto } from './dto/createbrands.dto';
+import { UpdateBrandsDto } from './dto/updatebrands.dto';
 import { ProductService } from 'src/product/product.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/authorization/roles.guard';
@@ -47,16 +47,35 @@ export class BrandsController {
   @Roles('roles', ROLES.ADMIN)
   @Post('addbrand')
   async create(@Body() createbrands: createBrandsDto) {
-    return await this.brandsService.create(createbrands);
+    try {
+      await this.brandsService.findOneByQuery({
+        where: [
+          { brand_id: `${createbrands.brand_id}` },
+          { brand_name: `${createbrands.brand_name}` },
+        ],
+      });
+    } catch (NotFoundException) {
+      return await this.brandsService.create(createbrands);
+    }
+    throw new NotAcceptableException('Some information already existed');
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('roles', ROLES.ADMIN)
   @Put('edit')
   async updateuser(@Body() updatebrandDto: UpdateBrandsDto) {
-    const brand_id = updatebrandDto.brand_id;
-    console.log(brand_id);
-    return await this.brandsService.update(brand_id, updatebrandDto);
+    let brand_id = updatebrandDto.brand_id;
+    try {
+      await this.brandsService.findOneByQuery({
+        where: [
+          { brand_id: `${brand_id}` },
+          { brand_name: `${updatebrandDto.brand_name}` },
+        ],
+      });
+    } catch (NotFoundException) {
+      return await this.brandsService.update(brand_id, updatebrandDto);
+    }
+    throw new NotAcceptableException('Some information already existed');
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

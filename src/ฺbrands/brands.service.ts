@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Brands } from './entities/brands.entity';
-import { UpdateBrandsDto } from './entities/updatebrands.dto';
+import { UpdateBrandsDto } from './dto/updatebrands.dto';
 @Injectable()
 export class BrandsService {
   constructor(
@@ -27,6 +27,16 @@ export class BrandsService {
     return Brands;
   }
 
+  async findOneByQuery(Brands: any): Promise<Brands> {
+    const brands = await this.BrandsRepository.findOne(Brands);
+    console.log(brands);
+
+    if (!brands) {
+      throw new NotFoundException(`Not found`);
+    }
+    return brands;
+  }
+
   async create(brands: Brands): Promise<Brands> {
     const checking_brands = await this.BrandsRepository.findOne(
       brands.brand_id,
@@ -34,6 +44,7 @@ export class BrandsService {
     if (!brands.brand_id) {
       throw new NotAcceptableException(`brands ${brands.brand_id} invalid`);
     }
+
     if (checking_brands && checking_brands.brand_id === brands.brand_id) {
       throw new NotAcceptableException(
         `Brand ${brands.brand_id} already existed`,

@@ -1,5 +1,5 @@
 export const jwtConstants = {
   secret: 'WitPaKul',
-  expiredateToken: `15m`,
+  expiredateToken: `30d`,
   expiredateRefreshtoken: `30d`,
 };

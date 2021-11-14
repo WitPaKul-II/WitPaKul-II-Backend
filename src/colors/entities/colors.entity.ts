@@ -18,5 +18,8 @@ export class Colors {
   @Column()
   color_name: string;
 
+  @Column()
+  color_code: string;
+
 
 }

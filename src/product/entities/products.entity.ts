@@ -40,7 +40,7 @@ export class Products {
   // @Field()
   amount: string;
   
-  @ManyToOne((type) => Brands , { eager: true})
+  @ManyToOne((type) => Brands , {eager: true,onUpdate: 'CASCADE'})
   @JoinColumn({name : 'brand' })
   // @Field((type) => Users_Category )
   brand: Brands;

@@ -16,12 +16,12 @@ import { RolesGuard } from './authorization/roles.guard';
     type: 'mysql',
     // host: 'localhost',
     //ENV for VM
-    // host: 'WitPaKul_DB', 
-    host: 'localhost', 
+    host: 'WitPaKul_DB', 
+    // host: 'localhost', 
     port: 3306,
     username: 'root',
-    password: 'mysql',
-    // password: 'witpakulbackend',
+    // password: 'mysql',
+    password: 'witpakulbackend',
     database: 'WitPaKul_DB',
     entities: [
       'dist/**/entities/*{.ts,.js}',

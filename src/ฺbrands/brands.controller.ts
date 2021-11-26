@@ -50,7 +50,7 @@ export class BrandsController {
     try {
       await this.brandsService.findOneByQuery({
         where: [
-          { brand_id: `${createbrands.brand_id}` },
+         
           { brand_name: `${createbrands.brand_name}` },
         ],
       });
@@ -65,17 +65,7 @@ export class BrandsController {
   @Put('edit')
   async updateuser(@Body() updatebrandDto: UpdateBrandsDto) {
     let brand_id = updatebrandDto.brand_id;
-    try {
-      await this.brandsService.findOneByQuery({
-        where: [
-          { brand_id: `${brand_id}` },
-          { brand_name: `${updatebrandDto.brand_name}` },
-        ],
-      });
-    } catch (NotFoundException) {
-      return await this.brandsService.update(brand_id, updatebrandDto);
-    }
-    throw new NotAcceptableException('Some information already existed');
+    return await this.brandsService.update(brand_id, updatebrandDto);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

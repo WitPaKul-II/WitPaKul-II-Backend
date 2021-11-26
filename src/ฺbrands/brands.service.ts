@@ -39,15 +39,15 @@ export class BrandsService {
 
   async create(brands: Brands): Promise<Brands> {
     const checking_brands = await this.BrandsRepository.findOne(
-      brands.brand_id,
+      brands.brand_name,
     );
-    if (!brands.brand_id) {
-      throw new NotAcceptableException(`brands ${brands.brand_id} invalid`);
+    if (!brands.brand_name) {
+      throw new NotAcceptableException(`brands ${brands.brand_name} invalid`);
     }
 
-    if (checking_brands && checking_brands.brand_id === brands.brand_id) {
+    if (checking_brands && checking_brands.brand_name === brands.brand_name) {
       throw new NotAcceptableException(
-        `Brand ${brands.brand_id} already existed`,
+        `Brand ${brands.brand_name} already existed`,
       );
     }
     return this.BrandsRepository.save(brands);

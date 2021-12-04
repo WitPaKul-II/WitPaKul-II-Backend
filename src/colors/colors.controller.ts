@@ -59,19 +59,36 @@ export class ColorsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('roles', ROLES.ADMIN)
   @Put('/edit')
-  async updateuser(@Body() updatebrandDto: UpdateColorsDto) {
-    let color_id = updatebrandDto.color_id;
+  async updateuser(@Body() updateColorDto: UpdateColorsDto) {
+    let color_id = updateColorDto.color_id;
     try {
-      await this.colorsService.findOneByQuery({
+      return await this.colorsService.findOneByQuery({
         where: [
-          { color_code: `${updatebrandDto.color_code}` },
-          { color_name: `${updatebrandDto.color_name}` },
+          { color_name: `${updateColorDto.color_name}` },
         ],
+      }).then(response => {
+        if (updateColorDto.color_id === response.color_id) {
+          return this.colorsService.update(color_id, updateColorDto);
+        }
+        throw new NotAcceptableException('Some information already existed');
       });
     } catch (NotFoundException) {
-      return await this.colorsService.update(color_id, updatebrandDto);
+      try {
+        return await this.colorsService.findOneByQuery({
+          where: [
+            { color_code: `${updateColorDto.color_code}` },
+          ],
+        }).then(response => {
+          if (updateColorDto.color_id === response.color_id) {
+            return this.colorsService.update(color_id, updateColorDto);
+          }
+          throw new NotAcceptableException('Some information already existed');
+        });
+      }
+      catch (NotFoundException) {
+        return await this.colorsService.update(color_id, updateColorDto);
+      }
     }
-
     throw new NotAcceptableException('Some information already existed');
   }
 

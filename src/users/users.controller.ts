@@ -66,7 +66,7 @@ export class UsersController {
         ],
       });
     } catch (NotFoundException) {
-      return await this.usersService.create(createuserDto);
+      return await this.usersService.create(createuserDto)," Sucessful";
     }
     throw new NotAcceptableException('Some information is invalide');
   }

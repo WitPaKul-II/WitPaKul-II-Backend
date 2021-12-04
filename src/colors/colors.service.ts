@@ -39,15 +39,15 @@ export class ColorsService {
 
   async create(colors: Colors): Promise<Colors> {
     const checking_colors = await this.ColorsRepository.findOne(
-      colors.color_id,
+      colors.color_name,
     );
-    if (!colors.color_id) {
-      throw new NotAcceptableException(`colors ${colors.color_id} invalid`);
+    if (!colors.color_name) {
+      throw new NotAcceptableException(`colors ${colors.color_name} invalid`);
     }
 
-    if (checking_colors && checking_colors.color_id === colors.color_id) {
+    if (checking_colors && checking_colors.color_name === colors.color_name) {
       throw new NotAcceptableException(
-        `colors ${colors.color_id} already existed  `,
+        `colors ${colors.color_name} already existed  `,
       );
     }
 

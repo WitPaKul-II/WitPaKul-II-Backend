@@ -10,7 +10,7 @@ import {Products} from '../../product/entities/products.entity'
 export class Brands {
   @PrimaryGeneratedColumn()
   // @Field(() => Int)
-  brand_id: string;
+  brand_id: number;
 
   @Column()
   // @Field()

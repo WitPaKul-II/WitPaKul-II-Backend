@@ -5,9 +5,12 @@ export class uploadservice {
       cb(null, req.headers.filename);
     }
    
-    static destinationPath(req, file, cb) {
+    static destinationProductPath(req, file, cb) {
       cb(null, './data/images/item')
     }
 
+    static destinationUserPath(req, file, cb) {
+      cb(null, './data/images/users')
+    }
   }
 

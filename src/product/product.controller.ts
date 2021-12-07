@@ -74,6 +74,10 @@ export class ProductController {
   )
   async uploadfile(@UploadedFiles() image, @Headers() headers) {
     console.log(`product_code: ${headers.product_code}, image_url: ${headers.filename},`);
+    let text = headers.filename;
+    const product_code_fromHeader = text.split("-");
+    console.log(product_code_fromHeader);
+    
     await this.productImagesService.create({
       product_code: headers.product_code,
       image_url: headers.filename,

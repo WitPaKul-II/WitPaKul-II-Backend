@@ -73,11 +73,12 @@ export class ProductController {
     }),
   )
   async uploadfile(@UploadedFiles() image, @Headers() headers) {
+    console.log(`product_code: ${headers.product_code}, image_url: ${headers.filename},`);
     await this.productImagesService.create({
       product_code: headers.product_code,
       image_url: headers.filename,
     });
-    console.log(`product_code: ${headers.product_code}, image_url: ${headers.filename},`);
+    
     
     return await image;
   }

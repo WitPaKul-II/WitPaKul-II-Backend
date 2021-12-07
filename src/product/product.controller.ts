@@ -73,10 +73,11 @@ export class ProductController {
     }),
   )
   async uploadfile(@UploadedFiles() image, @Headers() headers) {
-    return await this.productImagesService.create({
+    await this.productImagesService.create({
       product_code: headers.product_code,
       image_url: headers.filename,
     });
+    return await image;
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

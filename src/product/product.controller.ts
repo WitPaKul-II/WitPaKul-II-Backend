@@ -72,12 +72,14 @@ export class ProductController {
       }),
     }),
   )
-  uploadfile(@UploadedFiles() image, @Headers() headers) {
-  this.productImagesService.create({
+  async uploadfile(@UploadedFiles() image, @Headers() headers) {
+    await this.productImagesService.create({
       product_code: headers.product_code,
       image_url: headers.filename,
     });
-    return image;
+    console.log(`product_code: ${headers.product_code}, image_url: ${headers.filename},`);
+    
+    return await image;
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
